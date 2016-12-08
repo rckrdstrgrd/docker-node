@@ -1,4 +1,4 @@
-FROM docker:latest
+FROM docker:git
 
 ENV NPM_CONFIG_LOGLEVEL info
 ENV NODE_VERSION 6.9.2
