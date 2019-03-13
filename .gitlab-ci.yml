@@ -1,0 +1,17 @@
+image: docker:latest
+services:
+  - docker:dind
+
+variables:
+  CONTAINER_LATEST_IMAGE: registry.gitlab.com/rckrd/docker-node:latest
+  CONTAINER_RELEASE_IMAGE: registry.gitlab.com/rckrd/docker-node:$CI_BUILD_TAG
+
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+
+production:
+  only:
+    - master
+  script:
+    - docker build --pull -t $CONTAINER_LATEST_IMAGE .
+    - docker push $CONTAINER_LATEST_IMAGE
