@@ -4,7 +4,7 @@ services:
 
 variables:
   CONTAINER_LATEST_IMAGE: registry.gitlab.com/rckrd/docker-node:latest
-  CONTAINER_RELEASE_IMAGE: registry.gitlab.com/rckrd/docker-node:$CI_BUILD_TAG
+  CONTAINER_TAG_IMAGE: registry.gitlab.com/rckrd/docker-node:$CI_BUILD_TAG
 
 before_script:
   - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
@@ -15,3 +15,10 @@ production:
   script:
     - docker build --pull -t $CONTAINER_LATEST_IMAGE .
     - docker push $CONTAINER_LATEST_IMAGE
+
+production-tag:
+  only:
+    - tags
+  script:
+    - docker build --pull -t $CONTAINER_TAG_IMAGE .
+    - docker push $CONTAINER_TAG_IMAGE
